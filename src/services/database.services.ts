@@ -14,7 +14,7 @@ import Blood from '~/models/schema/bloodInventory.schemas'
 
 
 config()
-const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.qzi4a6o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@sdn-project.u8hm9wu.mongodb.net/?appName=SDN-project`
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 

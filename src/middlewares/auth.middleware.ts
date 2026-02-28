@@ -1,18 +1,16 @@
-import { Auth } from './../../node_modules/mongodb/src/mongo_client'
+
 ///import các interface để định dạng kiểu cho para của middlewares
-import { Request, Response, NextFunction } from 'express'
+
 import { ParamSchema, check, checkSchema } from 'express-validator'
-import { capitalize } from 'lodash'
-import HTTP_STATUS from '~/constants/httpStatus'
+
 import { USERS_MESSAGES } from '~/constants/message'
-import { ErrorWithStatus } from '~/models/Errors'
+
 import DatabaseService from '~/services/database.services'
-import UserServicess from '~/services/users.servicec'
+
 import { hashPassword } from '~/utils/crypto'
-import { verifyToken } from '~/utils/jwt'
+
 import { validate } from '~/utils/validation'
-import { JsonWebTokenError } from 'jsonwebtoken'
-import jwt from 'jsonwebtoken'
+
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key'
 
