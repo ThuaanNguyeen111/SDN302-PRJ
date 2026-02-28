@@ -28,12 +28,7 @@ export const loginValidator = validate(
             const hashedPassword = hashPassword(req.body.password)
 
             // Kiểm tra trong các collection admin, staff, user
-            const collections = [
-              DatabaseService.admins,
-              DatabaseService.staffs,
-              DatabaseService.users,
-              DatabaseService.headStaffs
-            ]
+            const collections = [DatabaseService.admins, DatabaseService.staffs, DatabaseService.users]
 
             for (const collection of collections) {
               const user = await collection.findOne({ email, password: hashedPassword })

@@ -1,7 +1,5 @@
 import { ParamsDictionary } from 'express-serve-static-core'
-import HTTP_STATUS from '~/constants/httpStatus'
-import bloodService from '~/services/bloods.services'
-import DatabaseService from '~/services/database.services'
+
 import { Request, Response } from 'express'
 import {
   CreateBloodReqBody,
@@ -12,7 +10,7 @@ import {
   updateUnitInventoryReqBody
 } from '~/models/request/blood.request'
 import { BLOOD_INVENTORY_MESSAGES } from '~/constants/bloodInventory'
-import { ObjectId } from 'mongodb'
+import bloodService from '~/services/bloods.services'
 import { updateBloodStatus } from '~/utils/updateBloodStatus'
 
 //!------------------------------------------------------------------------------------------------|
