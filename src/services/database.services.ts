@@ -9,9 +9,10 @@ import User from '~/models/schema/users.schemas'
 import RefreshToken from '~/models/schema/refreshToken.schemas'
 import Admin from '~/models/schema/admin.schemas'
 import Staff from '~/models/schema/staff.schemas'
+
+import Order from '~/models/schema/order.schemas'
+import Product from '~/models/schema/products.schemas'
 import Blood from '~/models/schema/bloodInventory.schemas'
-
-
 
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@sdn-project.u8hm9wu.mongodb.net/?appName=SDN-project`
@@ -61,9 +62,18 @@ class DatabaseServices {
   get staffs(): Collection<Staff> {
     return this.db.collection(process.env.DB_STAFFS_COLLECTION as string)
   }
- 
   get bloodInventory(): Collection<Blood> {
-    return this.db.collection(process.env.DB_BLOOD_COLLECTION as string)
+    return this.db.collection(process.env.DB_BLOOD_INVENTORY_COLLECTION as string)
+  }
+  get product(): Collection<Product> {
+    return this.db.collection(process.env.DB_PRODUCT_COLLECTION as string)
+  }
+  get orders(): Collection<Order> {
+    return this.db.collection(process.env.DB_ORDERS_COLLECTION as string)
+  }
+  get vouchers(): Collection<any> {
+    // Bạn có thể tự định nghĩa class Voucher sau
+    return this.db.collection(process.env.DB_VOUCHERS_COLLECTION as string)
   }
 }
 

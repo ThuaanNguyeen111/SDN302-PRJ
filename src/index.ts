@@ -8,6 +8,8 @@ import usersRouters from './routes/members.routers'
 import DatabaseServices from './services/database.services'
 import adminRouters from './routes/admin.routers'
 import ProductRouters from './routes/blood.routers'
+import ordersRouters from './routes/orders.routers'
+import vouchersRouters from './routes/vouchers.routers'
 
 config()
 
@@ -25,7 +27,8 @@ DatabaseServices.connect()
 app.use('/auth', authRouter) // route handler cho các chức năng liên quan đến xác thực như login, refresh token, get me
 app.use('/members', usersRouters) // route handler đăng kí đăng xuất
 app.use('/admins', adminRouters)
-
+app.use('/orders', ordersRouters) // route handler cho các chức năng liên quan đến đơn hàng
+app.use('/api/vouchers', vouchersRouters) // route handler cho các chức năng liên quan đến voucher
 //!-======= ROUTE HANDLER CHO CÁC THÀNH VIÊN CHÍNH (STAFF, ADMIN)=======-!//
 app.use('/inventory', ProductRouters) // route handler kho máu
 console.log('DB_USERS_COLLECTION:', process.env.DB_USERS_COLLECTION)

@@ -20,7 +20,7 @@ interface UserType {
   date_of_birth?: Date
   password: string
   phone_number?: string
-  blood_type?: string
+
   address?: Address
 
   created_at?: Date
@@ -45,7 +45,7 @@ export default class User {
   date_of_birth: Date
   password: string
   phone_number: string
-  blood_type: string
+
   address: Address
 
   created_at: Date
@@ -70,7 +70,6 @@ export default class User {
     this.date_of_birth = user.date_of_birth || now
     this.password = user.password
     this.phone_number = user.phone_number || ''
-    this.blood_type = user.blood_type || ''
     this.address =
       user.address || ({ street: '', ward: '', district: '', city: '', country: '', zipcode: '' } as Address)
 

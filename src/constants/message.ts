@@ -101,3 +101,23 @@ export const USERS_MESSAGES = {
   ZIPCODE_MUST_BE_A_NUMBER: 'Zipcode must be a number',
   CITIZEN_ID_MUST_BE_A_NUMBER: 'Citizen ID must be a number'
 } as const
+export const ORDER_MESSAGES = {
+  ORDER_SUCCESS: 'Create order successfully',
+  GET_ORDER_SUCCESS: 'Get orders successfully',
+  UPDATE_STATUS_SUCCESS: 'Update order status successfully',
+  PRODUCT_NOT_FOUND: 'Product not found',
+  NOT_ENOUGH_STOCK: 'Not enough stock for this product',
+  VOUCHER_NOT_FOUND_OR_EXPIRED: 'Voucher not found or expired',
+  VOUCHER_NOT_ELIGIBLE: 'Order amount is not enough to use this voucher',
+  ORDER_NOT_FOUND: 'Order not found',
+  FORBIDDEN_ROLE: 'You do not have permission to access this resource'
+} as const
+export const VOUCHER_MESSAGES = {
+  CREATE_VOUCHER_SUCCESS: 'Create voucher successfully',
+  GET_VOUCHERS_SUCCESS: 'Get vouchers successfully',
+  CHECK_VOUCHER_SUCCESS: 'Check voucher successfully',
+  VOUCHER_CODE_ALREADY_EXISTS: 'Voucher code already exists',
+  VOUCHER_NOT_FOUND_OR_EXPIRED: 'Voucher not found, expired, or inactive',
+  VOUCHER_NOT_ELIGIBLE: 'Order amount is not enough to use this voucher',
+  VOUCHER_USAGE_LIMIT_REACHED: 'Voucher usage limit reached'
+} as const

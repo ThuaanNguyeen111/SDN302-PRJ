@@ -1,5 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken'
-import { TokenTypes, UserVerifyStatus } from '~/constants/enums'
+import { TokenTypes, UserRole, UserVerifyStatus } from '~/constants/enums'
 
 export interface getInforByCitizenIDReqBody {
   citizen_id: string
@@ -23,7 +23,6 @@ export interface RegisterReqBody {
   phone_number: string
   Address: Address // địa chỉ là  gồm các trường street, ward, district, city, country, zipcode
   date_of_birth: string
-
 }
 
 //!------------------------------------------------------------------------------------------------
@@ -88,4 +87,13 @@ export interface ChangePasswordReqBody {
 }
 export interface RefreshTokenReqBody {
   refresh_token: string
+}
+export interface TokenPayload extends JwtPayload {
+  user_id: string
+  token_type: TokenTypes
+  verify: UserVerifyStatus
+  role: UserRole // Thêm dòng này để tý nữa check phân quyền
+  hospital_id?: string
+  exp: number
+  iat: number
 }

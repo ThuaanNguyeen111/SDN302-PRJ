@@ -13,13 +13,14 @@ export async function sendForgotPasswordEmail(toEmail: string, name: string, tok
   const resetLink = `http://localhost:3000/members/reset-password?forgot_password_token=${token}`
 
   await transporter.sendMail({
-    from: `"Baby Product" <${process.env.SMTP_USER}>`,
+    from: `"Baby Product Security" <${process.env.SMTP_USER}>`,
     to: toEmail,
-    subject: 'Reset Your Password - Baby Product',
+    subject: 'Yêu cầu khôi phục mật khẩu - Baby Product',
     html: generateEmailHTML({
       name,
-      buttonText: 'Reset Password',
-      message: 'We received a request to reset your password. Click the button below to continue.',
+      buttonText: 'Đặt lại mật khẩu',
+      message:
+        'Chúng tôi đã nhận được yêu cầu đặt lại mật khẩu cho tài khoản của bạn. Nếu bạn không thực hiện yêu cầu này, hãy bỏ qua email này để đảm bảo an toàn.',
       link: resetLink
     })
   })
