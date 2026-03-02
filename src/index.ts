@@ -8,6 +8,7 @@ import usersRouters from './routes/members.routers'
 import DatabaseServices from './services/database.services'
 import adminRouters from './routes/admin.routers'
 import ProductRouters from './routes/blood.routers'
+import productRouters from './routes/product.routers'
 
 config()
 
@@ -28,6 +29,7 @@ app.use('/admins', adminRouters)
 
 //!-======= ROUTE HANDLER CHO CÁC THÀNH VIÊN CHÍNH (STAFF, ADMIN)=======-!//
 app.use('/inventory', ProductRouters) // route handler kho máu
+app.use('/api/products', productRouters) // route handler sản phẩm baby product
 console.log('DB_USERS_COLLECTION:', process.env.DB_USERS_COLLECTION)
 app.use(defaultErrorHandler)
 // route handler cho các thành viên chính

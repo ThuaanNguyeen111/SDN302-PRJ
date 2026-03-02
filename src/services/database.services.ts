@@ -10,8 +10,7 @@ import RefreshToken from '~/models/schema/refreshToken.schemas'
 import Admin from '~/models/schema/admin.schemas'
 import Staff from '~/models/schema/staff.schemas'
 import Blood from '~/models/schema/bloodInventory.schemas'
-
-
+import Product from '~/models/schema/product.schemas'
 
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@sdn-project.u8hm9wu.mongodb.net/?appName=SDN-project`
@@ -64,6 +63,10 @@ class DatabaseServices {
  
   get bloodInventory(): Collection<Blood> {
     return this.db.collection(process.env.DB_BLOOD_COLLECTION as string)
+  }
+
+  get products(): Collection<Product> {
+    return this.db.collection(process.env.DB_PRODUCTS_COLLECTION as string)
   }
 }
 
