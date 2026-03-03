@@ -16,7 +16,7 @@ class OrderService {
 
     // 1. Tính toán giá tiền từ bảng Products (Tránh user fake giá từ frontend)
     for (const item of payload.items) {
-      const product = await DatabaseService.product.findOne({ _id: new ObjectId(item.product_id) })
+      const product = await DatabaseService.products.findOne({ _id: new ObjectId(item.product_id) })
 
       if (!product) {
         throw new ErrorWithStatus({ message: ORDER_MESSAGES.PRODUCT_NOT_FOUND, status: HTTP_STATUS.NOT_FOUND })
@@ -56,7 +56,7 @@ class OrderService {
 
     // 3. Trừ tồn kho (Dùng $inc của Native Mongo Driver)
     for (const item of itemsToInsert) {
-      await DatabaseService.product.updateOne(
+      await DatabaseService.products.updateOne(
         { _id: item.product_id },
         { $inc: { stock: -item.quantity, sold: item.quantity } }
       )
