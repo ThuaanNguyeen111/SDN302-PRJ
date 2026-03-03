@@ -19,14 +19,14 @@ export enum TokenTypes {
   ForgotPasswordToken
 }
 export enum UserRole {
-  User, //0
-  Admin, //1
-  Staff, //2
-  Headstaff //3
+  Guest = 0, // Khách chưa đăng nhập
+  Member = 1, // Thành viên đã đăng ký
+  Staff = 2, // Nhân viên
+  Admin = 3 // Quản trị viên
 }
 
 export enum UserRoleRedirectPath {
   Admin = '/dashboard/admin',
   Staff = '/dashboard/staff',
-  User = '/home'
+  Member = '/home'
 }

@@ -123,7 +123,7 @@ class OrderService {
     }
 
     // BẢO MẬT: Nếu là User thường (role === 0), chỉ được phép xem đơn hàng của chính mình tạo ra
-    if (role === UserRole.User && order.user_id.toString() !== user_id) {
+    if (role === UserRole.Member && order.user_id.toString() !== user_id) {
       throw new ErrorWithStatus({
         message: 'Bạn không có quyền xem đơn hàng của người khác',
         status: HTTP_STATUS.FORBIDDEN
