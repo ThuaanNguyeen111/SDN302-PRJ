@@ -11,10 +11,15 @@ interface Address {
   zipcode?: string
 }
 
+/**
+ * Schema thống nhất cho tất cả user trong hệ thống
+ * Phân biệt quyền bằng field `role` (khớp với role_code trong bảng roles)
+ *   Guest = 0 | Member = 1 | Staff = 2 | Admin = 3
+ */
 interface UserType {
   _id?: ObjectId
   name?: string
-  gender: string
+  gender?: string
   email: string
   citizen_id?: string
   date_of_birth?: Date
@@ -28,11 +33,12 @@ interface UserType {
   email_verify_token?: string
   forgot_password_token?: string
   verify?: UserVerifyStatus
-  role: UserRole
+  role?: UserRole // khớp với role_code trong collection roles
   location?: string
   username?: string
+  avatar?: string
 
-  // new fields
+  // Member-specific
   last_donation_date?: Date | null
 }
 
@@ -56,8 +62,9 @@ export default class User {
   role: UserRole
   location: string
   username: string
+  avatar: string
 
-  // new fields
+  // Member-specific
   last_donation_date: Date | null
 
   constructor(user: UserType) {
@@ -78,11 +85,12 @@ export default class User {
     this.email_verify_token = user.email_verify_token || ''
     this.forgot_password_token = user.forgot_password_token || ''
     this.verify = user.verify || UserVerifyStatus.Unverified
-    this.role = user.role || UserRole.User
+    this.role = user.role ?? UserRole.Member // Mặc định Member khi đăng ký
     this.location = user.location || ''
     this.username = user.username || ''
+    this.avatar = user.avatar || ''
 
-    // new fields
+    // Member-specific
     this.last_donation_date = user.last_donation_date ?? null
   }
 }

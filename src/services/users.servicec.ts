@@ -165,7 +165,7 @@ class userService {
         //dùng để độ lại password trong hasmap thành mã hoá
         password: hashPassword(payload.password),
         date_of_birth: new Date(payload.date_of_birth),
-        role: UserRole.User
+        role: UserRole.Member
         
       })
     )

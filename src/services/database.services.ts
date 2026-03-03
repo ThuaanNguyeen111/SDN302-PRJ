@@ -14,6 +14,7 @@ import Order from '~/models/schema/order.schemas'
 
 import Blood from '~/models/schema/bloodInventory.schemas'
 import Product from '~/models/schema/product.schemas'
+import Role from '~/models/schema/role.schemas'
 
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@sdn-project.u8hm9wu.mongodb.net/?appName=SDN-project`
@@ -76,7 +77,11 @@ class DatabaseServices {
   }
 
   get products(): Collection<Product> {
-    return this.db.collection(process.env.DB_PRODUCTS_COLLECTION as string)
+    return this.db.collection(process.env.DB_PRODUCTS_COLLECTION || 'products')
+  }
+
+  get roles(): Collection<Role> {
+    return this.db.collection(process.env.DB_ROLES_COLLECTION as string || 'roles')
   }
 }
 
