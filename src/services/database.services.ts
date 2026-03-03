@@ -14,6 +14,7 @@ import Order from '~/models/schema/order.schemas'
 
 import Blood from '~/models/schema/bloodInventory.schemas'
 import Product from '~/models/schema/product.schemas'
+import Post from '~/models/schema/post.schemas'
 import Role from '~/models/schema/role.schemas'
 
 config()
@@ -78,6 +79,10 @@ class DatabaseServices {
 
   get products(): Collection<Product> {
     return this.db.collection(process.env.DB_PRODUCTS_COLLECTION || 'products')
+  }
+
+  get posts(): Collection<Post> {
+    return this.db.collection(process.env.DB_POSTS_COLLECTION || 'posts')
   }
 
   get roles(): Collection<Role> {
