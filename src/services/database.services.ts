@@ -18,6 +18,7 @@ import Post from '~/models/schema/post.schemas'
 import Role from '~/models/schema/role.schemas'
 import Reward from '~/models/schema/reward.schemas'
 import PointHistory from '~/models/schema/pointHistory.schemas'
+import Report from '~/models/schema/report.schemas'
 
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@sdn-project.u8hm9wu.mongodb.net/?appName=SDN-project`
@@ -97,6 +98,10 @@ class DatabaseServices {
 
   get pointHistories(): Collection<PointHistory> {
     return this.db.collection(process.env.DB_POINT_HISTORIES_COLLECTION || 'point_histories')
+  }
+
+  get reports(): Collection<Report> {
+    return this.db.collection(process.env.DB_REPORTS_COLLECTION || 'reports')
   }
 }
 

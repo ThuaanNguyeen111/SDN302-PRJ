@@ -131,3 +131,10 @@ export const REWARD_MESSAGES = {
   REWARD_OUT_OF_STOCK: 'Reward is out of stock',
   NOT_ENOUGH_POINTS: 'Not enough points to redeem this reward'
 } as const
+export const REPORT_MESSAGES = {
+  CREATE_REPORT_SUCCESS: 'Report submitted successfully',
+  GET_REPORTS_SUCCESS: 'Get reports successfully',
+  RESOLVE_REPORT_SUCCESS: 'Report resolved successfully',
+  REPORT_NOT_FOUND: 'Report not found',
+  REPORT_ALREADY_RESOLVED: 'Report has already been resolved'
+} as const
