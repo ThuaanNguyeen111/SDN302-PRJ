@@ -12,6 +12,7 @@ import productRouters from './routes/product.routers'
 import ordersRouters from './routes/orders.routers'
 import vouchersRouters from './routes/vouchers.routers'
 import postRouters from './routes/post.routers'
+import rewardsRouters, { pointHistoryRouter } from './routes/rewards.routers'
 
 config()
 
@@ -35,6 +36,8 @@ app.use('/api/vouchers', vouchersRouters) // route handler cho các chức năng
 app.use('/inventory', ProductRouters) // route handler kho máu
 app.use('/api/products', productRouters) // route handler sản phẩm baby product
 app.use('/api/posts', postRouters) // route handler bài viết sức khỏe
+app.use('/api/rewards', rewardsRouters) // route handler đổi quà tích điểm
+app.use('/api/users', pointHistoryRouter) // route handler lịch sử điểm tích lũy
 console.log('DB_USERS_COLLECTION:', process.env.DB_USERS_COLLECTION)
 app.use(defaultErrorHandler)
 // route handler cho các thành viên chính

@@ -9,7 +9,10 @@ import { validate } from '~/utils/validation'
 
 //!-------------------------------------------------------------------------------------------------|
 export const isStaffOrAdminValidator = (req: Request, res: Response, next: NextFunction) => {
-  const { role } = req.decode_authorization as TokenPayload
+  const decoded = req.decode_authorization as any
+  const role = Number(decoded.user_role ?? decoded.role)
+  console.log('isStaffOrAdminValidator - decoded:', JSON.stringify(decoded))
+  console.log('isStaffOrAdminValidator - role:', role)
   if (role !== UserRole.Staff && role !== UserRole.Admin) {
     return next(
       new ErrorWithStatus({

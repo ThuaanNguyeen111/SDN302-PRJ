@@ -16,6 +16,8 @@ import Blood from '~/models/schema/bloodInventory.schemas'
 import Product from '~/models/schema/product.schemas'
 import Post from '~/models/schema/post.schemas'
 import Role from '~/models/schema/role.schemas'
+import Reward from '~/models/schema/reward.schemas'
+import PointHistory from '~/models/schema/pointHistory.schemas'
 
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@sdn-project.u8hm9wu.mongodb.net/?appName=SDN-project`
@@ -87,6 +89,14 @@ class DatabaseServices {
 
   get roles(): Collection<Role> {
     return this.db.collection(process.env.DB_ROLES_COLLECTION as string || 'roles')
+  }
+
+  get rewards(): Collection<Reward> {
+    return this.db.collection(process.env.DB_REWARDS_COLLECTION || 'rewards')
+  }
+
+  get pointHistories(): Collection<PointHistory> {
+    return this.db.collection(process.env.DB_POINT_HISTORIES_COLLECTION || 'point_histories')
   }
 }
 

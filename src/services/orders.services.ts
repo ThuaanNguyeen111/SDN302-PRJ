@@ -5,6 +5,7 @@ import { ErrorWithStatus } from '~/models/Errors'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { ORDER_MESSAGES } from '~/constants/message'
 import Order from '~/models/schema/order.schemas'
+import PointHistory from '~/models/schema/pointHistory.schemas'
 import { UserRole } from '~/constants/enums'
 import { sendOrderConfirmationEmail } from '~/utils/order-mailer'
 
@@ -90,7 +91,22 @@ class OrderService {
     }
     // =========================================================
 
-    return { order_id: result.insertedId, ...newOrder }
+    // 6. TÍCH ĐIỂM: cứ mỗi POINTS_PER_VND đồng được 1 điểm
+    const pointsPerVnd = Number(process.env.POINTS_PER_VND) || 1000
+    const earnedPoints = Math.floor(final_amount / pointsPerVnd)
+    if (earnedPoints > 0) {
+      const pointHistory = new PointHistory({
+        user_id: new ObjectId(user_id),
+        action: 'earn',
+        points: earnedPoints,
+        description: `Tích điểm đơn hàng #${result.insertedId} (${final_amount.toLocaleString()}đ)`
+      })
+      DatabaseService.pointHistories.insertOne(pointHistory).catch((err) => {
+        console.error('Lỗi khi tích điểm:', err)
+      })
+    }
+
+    return { order_id: result.insertedId, points_earned: earnedPoints, ...newOrder }
   }
 
   //!-------------------------------------------------------------------------------------------------|
