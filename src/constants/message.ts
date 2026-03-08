@@ -121,3 +121,13 @@ export const VOUCHER_MESSAGES = {
   VOUCHER_NOT_ELIGIBLE: 'Order amount is not enough to use this voucher',
   VOUCHER_USAGE_LIMIT_REACHED: 'Voucher usage limit reached'
 } as const
+export const REWARD_MESSAGES = {
+  CREATE_REWARD_SUCCESS: 'Create reward successfully',
+  REWARD_ALREADY_EXISTS: 'Reward with this name already exists',
+  GET_REWARDS_SUCCESS: 'Get rewards successfully',
+  REDEEM_SUCCESS: 'Redeem reward successfully',
+  GET_POINT_HISTORY_SUCCESS: 'Get point history successfully',
+  REWARD_NOT_FOUND: 'Reward not found or inactive',
+  REWARD_OUT_OF_STOCK: 'Reward is out of stock',
+  NOT_ENOUGH_POINTS: 'Not enough points to redeem this reward'
+} as const
