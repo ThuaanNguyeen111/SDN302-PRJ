@@ -18,4 +18,5 @@ export interface UpdateProductReqBody {
   image_url?: string
   brand?: string
   age_range?: string
+  allow_preorder?: boolean
 }

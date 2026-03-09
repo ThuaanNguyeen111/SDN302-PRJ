@@ -14,7 +14,7 @@ import { getRedirectPathByRole } from '~/utils/auth.utils'
 import { sendVerificationEmail } from '~/utils/mailer'
 import { sendForgotPasswordEmail } from '~/utils/verify-forgotpassword-mailer'
 import { ErrorWithStatus } from '~/models/Errors'
-import { getCitizenIDByUserId, getUserInforByCitizenID } from '~/utils/takeCitizenIDByID'
+
 import { merge } from 'lodash'
 //? khi đụng tới database thì đụng tới service
 class userService {
@@ -34,16 +34,6 @@ class userService {
     //!SECTION mình ép kiêu boolean để trả ra true hoặc false
   }
   //!-------------------------------------------------------------------------------------------------------------------||
-  async checkCitizenIDExist(citizen_id: string) {
-    const collections = [DatabaseService.users, DatabaseService.staffs]
-
-    for (const collection of collections) {
-      const result = await collection.findOne({ citizen_id: citizen_id.trim() })
-      if (result) return true
-    }
-
-    return false
-  }
 
   //!------------------------------------------------------------------------------------------------------------------||
   //? nếu không truyền exp thì mặc định là ngay hết hạn mới
@@ -166,7 +156,6 @@ class userService {
         password: hashPassword(payload.password),
         date_of_birth: new Date(payload.date_of_birth),
         role: UserRole.Member
-        
       })
     )
 
@@ -309,7 +298,7 @@ class userService {
 
     // đưa những trường không phải là nest vào 1 bên
     // chạy từng key nếu có trong payload thì cập nhật
-    const flatFields = ['name', 'gender', 'citizen_id', 'avatar'] as const
+    const flatFields = ['name', 'gender', 'avatar'] as const
     flatFields.forEach((field) => {
       if (payload[field] !== undefined) {
         updatePayload[field] = payload[field]
@@ -337,19 +326,7 @@ class userService {
 
     return result
   }
-  //!------------------------------------------------------------------------------------------|
-  async getCitizenID(user_id: string) {
-    const user = await getCitizenIDByUserId(user_id)
-    if (!user) throw new Error('The citizenID is not exist ')
 
-    return user
-  }
-  //!------------------------------------------------------------------------------------------|
-  async getUserInforBYCitizenID(citizen_id: string) {
-    const user = await getUserInforByCitizenID(citizen_id)
-    if (!user) throw new Error('The citizenID does not exist')
-    return user
-  }
   //!-------------------------------------------------------------------------------------------|
   async createAccessTokenFromRefresh(user_id: string) {
     const access_token = await signToken({

@@ -9,7 +9,7 @@ class adminServices {
   async getAllUsers() {
     const [users, staffs, admins] = await Promise.all([
       DatabaseService.users
-        .find({}, { projection: { password: 0, email_verifiy_token: 0, forgot_password: 0 } })
+        .find({}, { projection: { projection: { password: 0, email_verifiy_token: 0, forgot_password: 0 } } })
         .toArray(),
       DatabaseService.staffs.find({}, { projection: { password: 0 } }).toArray(),
       DatabaseService.admins.find({}, { projection: { password: 0 } }).toArray()

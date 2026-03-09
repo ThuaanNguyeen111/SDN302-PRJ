@@ -2,8 +2,10 @@ console.log('⚡ AdminController is triggered')
 import { Request, Response } from 'express'
 import { ParamsDictionary } from 'express-serve-static-core' //này copilot ko tự xổ dùng chatgpt
 import { ADMIN_MESSAGE } from '~/constants/admin.message'
-import { getInforByCitizenIDReqBody, UpdateMeReqBody } from '~/models/request/user.requests'
+import { UpdateMeReqBody } from '~/models/request/user.requests'
+
 import adminServcie from '~/services/admin.services'
+import dashboardService from '~/services/dashboard.services'
 
 export const getAllUsersController = async (req: Request, res: Response) => {
   const result = await adminServcie.getAllUsers()
@@ -37,6 +39,14 @@ export const updateMeAdminController = async (req: Request<ParamsDictionary, any
   const result = await adminServcie.updateMe(user_id, body)
   return res.json({
     message: ADMIN_MESSAGE.UPDATE_ME_SUCCESS,
+    result
+  })
+}
+//!----------------------------------------------------------------------------------------------------------------------------!
+export const getDashboardStatsController = async (req: Request, res: Response) => {
+  const result = await dashboardService.getStats()
+  return res.json({
+    message: 'Get dashboard statistics successfully',
     result
   })
 }

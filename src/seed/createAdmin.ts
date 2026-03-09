@@ -2,6 +2,7 @@
 import { config } from 'dotenv'
 import { ObjectId } from 'mongodb'
 import { UserRole, UserVerifyStatus } from '~/constants/enums'
+import Admin from '~/models/schema/admin.schemas'
 import DatabaseService from '~/services/database.services'
 import { hashPassword } from '~/utils/crypto'
 
@@ -26,17 +27,14 @@ async function createAdmin() {
     const password = hashPassword(process.env.ADMIN_PASSWORD!)
 
     // Tạo đối tượng admin mới
-    const newAdmin = {
-      _id: new ObjectId(),
+    const newAdmin = new Admin({
       username: 'admin',
       name: 'Administrator',
       email: process.env.ADMIN_EMAIL!,
       password,
-      created_at: new Date(),
-      updated_at: new Date(),
       verify: UserVerifyStatus.Verified,
       role: UserRole.Admin
-    }
+    })
 
     // Thêm admin vào collection
     await admins.insertOne(newAdmin)

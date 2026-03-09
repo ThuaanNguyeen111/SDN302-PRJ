@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-
+import { OrderStatus } from '~/constants/enums'
 interface OrderItem {
   product_id: ObjectId
   quantity: number
@@ -12,9 +12,10 @@ interface OrderType {
   items: OrderItem[]
   total_amount: number
   discount_amount: number
+  status?: OrderStatus
   final_amount: number
   address: string
-  status?: string // Pending, Confirmed, Shipping, Delivered, Cancelled
+  // Pending, Confirmed, Shipping, Delivered, Cancelled
   created_at?: Date
   updated_at?: Date
 }
@@ -40,7 +41,7 @@ export default class Order {
     this.discount_amount = order.discount_amount
     this.final_amount = order.final_amount
     this.address = order.address
-    this.status = order.status || 'Pending'
+    this.status = order.status || OrderStatus.Pending
     this.created_at = order.created_at || now
     this.updated_at = order.updated_at || now
   }

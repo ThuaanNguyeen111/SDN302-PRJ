@@ -21,13 +21,13 @@ interface UserType {
   name?: string
   gender?: string
   email: string
-  citizen_id?: string
+
   date_of_birth?: Date
   password: string
   phone_number?: string
 
   address?: Address
-
+  accumulated_points?: number
   created_at?: Date
   updated_at?: Date
   email_verify_token?: string
@@ -47,13 +47,13 @@ export default class User {
   name: string
   gender: string
   email: string
-  citizen_id: string
+
   date_of_birth: Date
   password: string
   phone_number: string
 
   address: Address
-
+  accumulated_points: number
   created_at: Date
   updated_at: Date
   email_verify_token: string
@@ -64,33 +64,31 @@ export default class User {
   username: string
   avatar: string
 
-  // Member-specific
-  last_donation_date: Date | null
-
   constructor(user: UserType) {
     const now = new Date()
     this._id = user._id || new ObjectId()
     this.name = user.name || ''
     this.gender = user.gender || ''
     this.email = user.email
-    this.citizen_id = user.citizen_id || ''
+
     this.date_of_birth = user.date_of_birth || now
     this.password = user.password
     this.phone_number = user.phone_number || ''
     this.address =
       user.address || ({ street: '', ward: '', district: '', city: '', country: '', zipcode: '' } as Address)
 
+    // SỬA Ở ĐÂY 1: Khởi tạo giá trị mặc định cho accumulated_points là 0
+    this.accumulated_points = user.accumulated_points || 0
+
+    // SỬA Ở ĐÂY 2: Xóa chữ "this." bị dư
     this.created_at = user.created_at || now
     this.updated_at = user.updated_at || now
     this.email_verify_token = user.email_verify_token || ''
     this.forgot_password_token = user.forgot_password_token || ''
     this.verify = user.verify || UserVerifyStatus.Unverified
-    this.role = user.role ?? UserRole.Member // Mặc định Member khi đăng ký
+    this.role = user.role ?? UserRole.Member
     this.location = user.location || ''
     this.username = user.username || ''
     this.avatar = user.avatar || ''
-
-    // Member-specific
-    this.last_donation_date = user.last_donation_date ?? null
   }
 }

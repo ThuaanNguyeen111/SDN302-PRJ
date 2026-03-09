@@ -108,6 +108,10 @@ export const updateProductValidator = validate(
         optional: true,
         isString: { errorMessage: PRODUCT_MESSAGES.AGE_RANGE_MUST_BE_A_STRING },
         trim: true
+      },
+      allow_preorder: {
+        optional: true,
+        isBoolean: { errorMessage: PRODUCT_MESSAGES.ALLOW_PREORDER_MUST_BE_BOOLEAN }
       }
     },
     ['body']

@@ -8,8 +8,7 @@ type FilterKeys<T> = Array<keyof T>
 export const filterMiddleware =
   //T là gt xem coi key hợp lệ là trường gì
 
-
-    <T>(filterKey: FilterKeys<T>) =>
+  <T>(filterKey: FilterKeys<T>) =>
     (req: Request, res: Response, next: NextFunction) => {
       req.body = pick(req.body, filterKey) //pick là lấy
       next()

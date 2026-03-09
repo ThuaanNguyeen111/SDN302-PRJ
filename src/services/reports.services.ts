@@ -52,7 +52,11 @@ class ReportService {
 
   //!-------------------------------------------------------------------------------------------------|
   // 3. ĐÁNH DẤU REPORT ĐÃ GIẢI QUYẾT (Staff)
-  async resolveReport(report_id: string, staff_id: string, payload: { status: 'resolved' | 'rejected'; resolved_note?: string }) {
+  async resolveReport(
+    report_id: string,
+    staff_id: string,
+    payload: { status: 'resolved' | 'rejected'; resolved_note?: string }
+  ) {
     const report = await DatabaseService.reports.findOne({ _id: new ObjectId(report_id) })
 
     if (!report) {

@@ -11,14 +11,13 @@ import Admin from '~/models/schema/admin.schemas'
 import Staff from '~/models/schema/staff.schemas'
 
 import Order from '~/models/schema/order.schemas'
-
-import Blood from '~/models/schema/bloodInventory.schemas'
 import Product from '~/models/schema/product.schemas'
 import Post from '~/models/schema/post.schemas'
 import Role from '~/models/schema/role.schemas'
 import Reward from '~/models/schema/reward.schemas'
 import PointHistory from '~/models/schema/pointHistory.schemas'
 import Report from '~/models/schema/report.schemas'
+import Review from '~/models/schema/reviews.schemas'
 
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@sdn-project.u8hm9wu.mongodb.net/?appName=SDN-project`
@@ -68,9 +67,6 @@ class DatabaseServices {
   get staffs(): Collection<Staff> {
     return this.db.collection(process.env.DB_STAFFS_COLLECTION as string)
   }
-  get bloodInventory(): Collection<Blood> {
-    return this.db.collection(process.env.DB_BLOOD_INVENTORY_COLLECTION as string)
-  }
 
   get orders(): Collection<Order> {
     return this.db.collection(process.env.DB_ORDERS_COLLECTION as string)
@@ -89,7 +85,7 @@ class DatabaseServices {
   }
 
   get roles(): Collection<Role> {
-    return this.db.collection(process.env.DB_ROLES_COLLECTION as string || 'roles')
+    return this.db.collection((process.env.DB_ROLES_COLLECTION as string) || 'roles')
   }
 
   get rewards(): Collection<Reward> {
@@ -102,6 +98,9 @@ class DatabaseServices {
 
   get reports(): Collection<Report> {
     return this.db.collection(process.env.DB_REPORTS_COLLECTION || 'reports')
+  }
+  get reviews(): Collection<Review> {
+    return this.db.collection(process.env.DB_REVIEWS_COLLECTION || 'reviews')
   }
 }
 

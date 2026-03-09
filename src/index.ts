@@ -7,13 +7,14 @@ import authRouter from './routes/auth.routers'
 import usersRouters from './routes/members.routers'
 import DatabaseServices from './services/database.services'
 import adminRouters from './routes/admin.routers'
-import ProductRouters from './routes/blood.routers'
+
 import productRouters from './routes/product.routers'
 import ordersRouters from './routes/orders.routers'
 import vouchersRouters from './routes/vouchers.routers'
 import postRouters from './routes/post.routers'
 import rewardsRouters, { pointHistoryRouter } from './routes/rewards.routers'
 import reportsRouters, { adminReportsRouters } from './routes/reports.routers'
+import reviewsRouters from './routes/reviews.routers'
 
 config()
 
@@ -34,13 +35,15 @@ app.use('/admins', adminRouters)
 app.use('/orders', ordersRouters) // route handler cho các chức năng liên quan đến đơn hàng
 app.use('/api/vouchers', vouchersRouters) // route handler cho các chức năng liên quan đến voucher
 //!-======= ROUTE HANDLER CHO CÁC THÀNH VIÊN CHÍNH (STAFF, ADMIN)=======-!//
-app.use('/inventory', ProductRouters) // route handler kho máu
+app.use('/inventory', productRouters) // route handler kho máu
 app.use('/api/products', productRouters) // route handler sản phẩm baby product
 app.use('/api/posts', postRouters) // route handler bài viết sức khỏe
 app.use('/api/rewards', rewardsRouters) // route handler đổi quà tích điểm
 app.use('/api/users', pointHistoryRouter) // route handler lịch sử điểm tích lũy
 app.use('/api/reports', reportsRouters) // route handler gửi report (Member)
 app.use('/api/admin', adminReportsRouters) // route handler quản lý report (Staff/Admin)
+app.use('/api/reviews', reviewsRouters)
+
 console.log('DB_USERS_COLLECTION:', process.env.DB_USERS_COLLECTION)
 app.use(defaultErrorHandler)
 // route handler cho các thành viên chính

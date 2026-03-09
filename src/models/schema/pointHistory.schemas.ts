@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb'
 
-export type PointActionType = 'earn' | 'redeem'
+export type PointActionType = 'earn' | 'redeem' | 'revoke'
 
 interface PointHistoryType {
   _id?: ObjectId

@@ -10,7 +10,7 @@ export default class Staff extends User {
     _id?: any
     name: string
     email: string
-    citizen_id?: string
+
     password: string
     created_at?: Date
     updated_at?: Date

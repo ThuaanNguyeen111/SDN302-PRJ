@@ -26,8 +26,7 @@ export const USERS_MESSAGES = {
   CONFIRM_PASSWORD_MUST_BE_THE_SAME_AS_PASSWORD: 'Confirm password must be the same as password',
   //dateOfBirth
   DATE_OF_BIRTH_BE_ISO8601: 'Date of birth must be ISO8601',
-  //MedicalConditions&& MedicalHistory
-  MEDICAL_HISTORY_REQUIRED: 'Medical conditions is required',
+
   //Address
   ADDRESS_IS_REQUIRED: 'Address is required',
   ADDRESS_MUST_BE_A_STRING: 'Address must be a string',
@@ -37,9 +36,7 @@ export const USERS_MESSAGES = {
   LOGIN_SUCCESS: 'Login successfully',
   REGISTER_SUCCESS: 'Register successfully',
   ACCESS_TOKEN_IS_REQUIRED: 'Access token is required',
-  CITIZEN_ID_MUST_BE_A_STRING: 'Citizen id must be a string',
-  CITIZEN_ID_LENGTH_MUST_HAVE_12_NUMBER: 'Citizen id length must have 12 number',
-  CITIZEN_ID_IS_REQUIRED: 'Citizen id is required',
+
   REFRESH_TOKEN_IS_REQUIRED: 'Refersh token is required',
   USED_REFRESH_TOKEN_OR_NOT_EXIST: 'Used refersh token or not exist',
   LOGOUT_SUCCESS: 'Logout successfully',
@@ -88,18 +85,15 @@ export const USERS_MESSAGES = {
   UPLOAD_SUCCESS: 'Upload success',
   GENDER_MUST_BE_STRING: 'Gender must be a string',
   GENDER_INVALID: 'Gender must be one of: male, female, or other',
-  CITIZEN_ID_MUST_BE_STRING: 'Citizen ID must be a string',
+
   STREET_MUST_BE_STRING: 'Street must be a string',
   WARD_MUST_BE_STRING: 'Ward must be a string',
   DISTRICT_MUST_BE_STRING: 'District must be a string',
   CITY_MUST_BE_STRING: 'City must be a string',
   COUNTRY_MUST_BE_STRING: 'Country must be a string',
   ZIPCODE_MUST_BE_STRING: 'Zipcode must be a string',
-  EMERGENCY_CONTACT_NAME_MUST_BE_STRING: 'Emergency contact name must be a string',
-  EMERGENCY_CONTACT_PHONE_MUST_BE_STRING: 'Emergency contact phone number must be a string',
-  MEDICAL_CONDITIONS_CANNOT_BE_UPDATED: 'Medical condition cannot be update',
-  ZIPCODE_MUST_BE_A_NUMBER: 'Zipcode must be a number',
-  CITIZEN_ID_MUST_BE_A_NUMBER: 'Citizen ID must be a number'
+
+  ZIPCODE_MUST_BE_A_NUMBER: 'Zipcode must be a number'
 } as const
 export const ORDER_MESSAGES = {
   ORDER_SUCCESS: 'Create order successfully',

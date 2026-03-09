@@ -7,6 +7,7 @@ import {
   getProductByIdController,
   updateProductController
 } from '~/controllers/products.controllers'
+import { getProductReviewsController } from '~/controllers/reviews.controllers'
 import { createProductValidator, updateProductValidator } from '~/middlewares/products.middleware'
 import { requireRole } from '~/middlewares/requireRole.middlewares'
 import { accessTokenValidator } from '~/middlewares/users.middlewares'
@@ -65,5 +66,10 @@ productRouters.put(
  * @params id - MongoDB ObjectId của sản phẩm
  */
 productRouters.delete('/:id', accessTokenValidator, requireRole(UserRole.Admin), WarpAsync(deleteProductController))
-
+//!-------------------------------------------------------------------------------------------------|
+/**
+ * @description Xem danh sách đánh giá của 1 sản phẩm (Guest xem được)
+ * @endpoint GET /api/products/:id/reviews
+ */
+productRouters.get('/:id/reviews', WarpAsync(getProductReviewsController))
 export default productRouters

@@ -4,14 +4,6 @@ export enum UserVerifyStatus {
   Banned // bị khóa
 }
 
-export enum BloodStatus {
-  EMPTY = 'EMPTY',
-  CRITICAL = 'CRITICAL',
-  HIGH = 'HIGH',
-  MEDIUM = 'MEDIUM',
-  LOW = 'LOW'
-}
-
 export enum TokenTypes {
   AccessToken,
   RefreshToken,
@@ -29,4 +21,10 @@ export enum UserRoleRedirectPath {
   Admin = '/dashboard/admin',
   Staff = '/dashboard/staff',
   Member = '/home'
+}
+export enum OrderStatus {
+  Pending = 'Pending', // Chờ duyệt
+  Delivering = 'Delivering', // Đang giao hàng
+  Delivered = 'Delivered', // Đã giao thành công
+  Cancelled = 'Cancelled' // Đã hủy
 }

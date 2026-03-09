@@ -1,9 +1,7 @@
 import { JwtPayload } from 'jsonwebtoken'
 import { TokenTypes, UserRole, UserVerifyStatus } from '~/constants/enums'
 
-export interface getInforByCitizenIDReqBody {
-  citizen_id: string
-}
+
 export interface Address {
   street: string
   ward: string
@@ -17,7 +15,7 @@ export interface RegisterReqBody {
   name: string
   gender: string
   email: string
-  citizen_id: string
+
   password: string
   confirmPassword: string
   phone_number: string
@@ -74,7 +72,7 @@ export interface UpdateMeReqBody {
   name?: string
   date_of_birth?: string //vì ngta truyền lên string dạng ISO8601, k phải date
   gender?: string
-  citizen_id?: string
+
   address?: address
 
   avatar?: string

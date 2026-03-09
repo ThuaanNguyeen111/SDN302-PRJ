@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import { checkSchema } from 'express-validator'
-import { UserRole } from '~/constants/enums'
+import { OrderStatus, UserRole } from '~/constants/enums'
 import HTTP_STATUS from '~/constants/httpStatus'
 import { ORDER_MESSAGES } from '~/constants/message'
 import { ErrorWithStatus } from '~/models/Errors'
@@ -47,6 +47,22 @@ export const createOrderValidator = validate(
       voucher_code: {
         optional: true,
         isString: true
+      }
+    },
+    ['body']
+  )
+)
+export const updateOrderStatusValidator = validate(
+  checkSchema(
+    {
+      status: {
+        notEmpty: {
+          errorMessage: 'Trạng thái không được để trống'
+        },
+        isIn: {
+          options: [Object.values(OrderStatus)],
+          errorMessage: 'Trạng thái không hợp lệ. Chỉ chấp nhận: Pending, Delivering, Delivered, Cancelled'
+        }
       }
     },
     ['body']

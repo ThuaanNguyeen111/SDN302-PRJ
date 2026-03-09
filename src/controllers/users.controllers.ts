@@ -4,7 +4,6 @@ import { USERS_MESSAGES } from '~/constants/message'
 import {
   EmailVerifyReqBody,
   ForgotPasswordReqBody,
-  getInforByCitizenIDReqBody,
   LoginReqBody,
   LogoutResBody,
   RegisterReqBody,
@@ -186,21 +185,7 @@ export const updateMeController = async (req: Request<ParamsDictionary, any, Upd
     result
   })
 }
-//!----------------------------------------------------------------------------------------------------------------------------!
-export const getCitizenIDController = async (req: Request, res: Response) => {
-  const { user_id } = req.params
-  const result = await UserServicess.getCitizenID(user_id)
-  return res.json(result)
-}
-//!----------------------------------------------------------------------------------------------------------------------------!
-export const getUserInforBYCitizenIController = async (
-  req: Request<ParamsDictionary, any, getInforByCitizenIDReqBody>,
-  res: Response
-) => {
-  const { citizen_id } = req.body
-  const result = await UserServicess.getUserInforBYCitizenID(citizen_id)
-  return res.json(result)
-}
+
 //!----------------------------------------------------------------------------------------------------------------------------!
 export const refreshAccessTokenController = async (req: Request, res: Response) => {
   const { decode_refresh_token } = req as Request & {

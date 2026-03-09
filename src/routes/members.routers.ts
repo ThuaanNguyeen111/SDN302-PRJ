@@ -155,7 +155,7 @@ usersRouters.patch(
   '/me',
   accessTokenValidator,
   verifyfiedUserValidator,
-  filterMiddleware<UpdateMeReqBody>(['name', 'date_of_birth', 'gender', 'citizen_id', 'address', 'avatar']),
+  filterMiddleware<UpdateMeReqBody>(['name', 'date_of_birth', 'gender', 'address', 'avatar']),
   updateMeValidator,
   WarpAsync(updateMeController)
 )

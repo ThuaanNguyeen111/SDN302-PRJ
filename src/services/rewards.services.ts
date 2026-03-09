@@ -17,11 +17,7 @@ class RewardService {
         status: HTTP_STATUS.BAD_REQUEST
       })
     }
-
-    const newReward = new Reward({
-      ...payload
-    })
-
+    const newReward = new Reward({ ...payload })
     await DatabaseService.rewards.insertOne(newReward)
     return { ...newReward }
   }
@@ -31,45 +27,45 @@ class RewardService {
   async getRewards() {
     const rewards = await DatabaseService.rewards
       .find({ status: 'active', stock: { $gt: 0 } })
-      .sort({ points_required: 1 })
+      .sort({ points_required: 1 }) // Món ít điểm xếp lên trên
       .toArray()
     return rewards
   }
 
   //!-------------------------------------------------------------------------------------------------|
-  // 2. ĐỔI ĐIỂM LẤY QUÀ (Member)
+  // 2. ĐỔI ĐIỂM LẤY QUÀ (Member) - LOGIC MỚI ĐÃ SỬA
   async redeemReward(user_id: string, reward_id: string) {
-    // Tìm reward
+    // 1. Tìm thông tin quà tặng
     const reward = await DatabaseService.rewards.findOne({
       _id: new ObjectId(reward_id),
       status: 'active'
     })
 
     if (!reward) {
-      throw new ErrorWithStatus({
-        message: REWARD_MESSAGES.REWARD_NOT_FOUND,
-        status: HTTP_STATUS.NOT_FOUND
-      })
+      throw new ErrorWithStatus({ message: REWARD_MESSAGES.REWARD_NOT_FOUND, status: HTTP_STATUS.NOT_FOUND })
     }
-
     if (reward.stock <= 0) {
-      throw new ErrorWithStatus({
-        message: REWARD_MESSAGES.REWARD_OUT_OF_STOCK,
-        status: HTTP_STATUS.BAD_REQUEST
-      })
+      throw new ErrorWithStatus({ message: REWARD_MESSAGES.REWARD_OUT_OF_STOCK, status: HTTP_STATUS.BAD_REQUEST })
     }
 
-    // Tính tổng điểm hiện tại của user
-    const currentPoints = await this.getUserTotalPoints(user_id)
+    // 2. Lấy thông tin User hiện tại để kiểm tra số dư điểm
+    const user = await DatabaseService.users.findOne({ _id: new ObjectId(user_id) })
+    if (!user) {
+      throw new ErrorWithStatus({ message: 'User không tồn tại', status: HTTP_STATUS.NOT_FOUND })
+    }
 
+    const currentPoints = user.accumulated_points || 0 // Điểm hiện có của user
+
+    // 3. Kiểm tra xem user có đủ điểm đổi món quà này không?
     if (currentPoints < reward.points_required) {
       throw new ErrorWithStatus({
-        message: REWARD_MESSAGES.NOT_ENOUGH_POINTS,
+        message: 'Bạn không đủ điểm để đổi món quà này!', // Báo lỗi không đủ điểm
         status: HTTP_STATUS.BAD_REQUEST
       })
     }
 
-    // Trừ stock của reward
+    // 4. Bắt đầu xử lý Giao dịch (Transaction-like)
+    // 4.1. Trừ số lượng kho của món quà
     await DatabaseService.rewards.updateOne(
       { _id: new ObjectId(reward_id) },
       {
@@ -78,7 +74,13 @@ class RewardService {
       }
     )
 
-    // Tạo bản ghi trừ điểm
+    // 4.2. TRỪ ĐIỂM TÍCH LŨY CỦA USER (Quan trọng)
+    await DatabaseService.users.updateOne(
+      { _id: new ObjectId(user_id) },
+      { $inc: { accumulated_points: -reward.points_required } } // Dùng $inc số âm để trừ điểm
+    )
+
+    // 4.3. Tạo bản ghi lịch sử trừ điểm
     const pointHistory = new PointHistory({
       user_id: new ObjectId(user_id),
       action: 'redeem',
@@ -86,54 +88,33 @@ class RewardService {
       description: `Đổi quà: ${reward.name}`,
       reward_id: new ObjectId(reward_id)
     })
-
     await DatabaseService.pointHistories.insertOne(pointHistory)
 
+    // 5. Trả kết quả về
     return {
       reward_name: reward.name,
       points_used: reward.points_required,
-      remaining_points: currentPoints - reward.points_required
+      remaining_points: currentPoints - reward.points_required // Tính điểm còn lại cho User thấy
     }
   }
 
   //!-------------------------------------------------------------------------------------------------|
   // 3. XEM LỊCH SỬ ĐIỂM (Member)
   async getPointHistory(user_id: string) {
+    // Lấy lịch sử giao dịch (cả nhận và trừ)
     const history = await DatabaseService.pointHistories
       .find({ user_id: new ObjectId(user_id) })
       .sort({ created_at: -1 })
       .toArray()
 
-    const totalPoints = await this.getUserTotalPoints(user_id)
+    // Lấy số dư điểm HIỆN TẠI trực tiếp từ bảng User
+    const user = await DatabaseService.users.findOne({ _id: new ObjectId(user_id) })
+    const totalPoints = user?.accumulated_points || 0
 
     return {
       total_points: totalPoints,
       history
     }
-  }
-
-  //!-------------------------------------------------------------------------------------------------|
-  // HELPER: Tính tổng điểm hiện tại của user
-  async getUserTotalPoints(user_id: string): Promise<number> {
-    const result = await DatabaseService.pointHistories
-      .aggregate([
-        { $match: { user_id: new ObjectId(user_id) } },
-        {
-          $group: {
-            _id: null,
-            earned: {
-              $sum: { $cond: [{ $eq: ['$action', 'earn'] }, '$points', 0] }
-            },
-            redeemed: {
-              $sum: { $cond: [{ $eq: ['$action', 'redeem'] }, '$points', 0] }
-            }
-          }
-        }
-      ])
-      .toArray()
-
-    if (result.length === 0) return 0
-    return result[0].earned - result[0].redeemed
   }
 }
 

@@ -35,11 +35,15 @@ class ProductService {
   }
 
   //!------------------------------------------------------------------------------------------------|
-  async createProduct(payload: CreateProductReqBody) {
+  async createProduct(payload: any) {
+    // Có thể dùng CreateProductReqBody nếu bạn đã định nghĩa kỹ
     const product = new Product({
       ...payload,
       price: Number(payload.price),
-      stock: Number(payload.stock)
+
+      // SỬA Ở ĐÂY: Ánh xạ đúng biến từ payload (gửi lên) vào biến của Database
+      stock: Number(payload.stock_quantity),
+      image: payload.image_url
     })
 
     await DatabaseService.products.insertOne(product)
@@ -48,7 +52,7 @@ class ProductService {
   }
 
   //!------------------------------------------------------------------------------------------------|
-  async updateProduct(product_id: string, payload: UpdateProductReqBody) {
+  async updateProduct(product_id: string, payload: any) {
     if (!ObjectId.isValid(product_id)) {
       throw new ErrorWithStatus({
         message: PRODUCT_MESSAGES.INVALID_PRODUCT_ID,
@@ -62,10 +66,16 @@ class ProductService {
     if (payload.description !== undefined) updateFields.description = payload.description
     if (payload.category !== undefined) updateFields.category = payload.category
     if (payload.price !== undefined) updateFields.price = Number(payload.price)
-    if (payload.stock_quantity !== undefined) updateFields.stock_quantity = Number(payload.stock_quantity)
-    if (payload.image_url !== undefined) updateFields.image_url = payload.image_url
+
+    // SỬA Ở ĐÂY: Tên biến gửi lên là stock_quantity, nhưng field lưu DB phải là stock
+    if (payload.stock_quantity !== undefined) updateFields.stock = Number(payload.stock_quantity)
+
+    // SỬA Ở ĐÂY: Tên biến gửi lên là image_url, nhưng field lưu DB phải là image
+    if (payload.image_url !== undefined) updateFields.image = payload.image_url
+
     if (payload.brand !== undefined) updateFields.brand = payload.brand
     if (payload.age_range !== undefined) updateFields.age_range = payload.age_range
+    if (payload.allow_preorder !== undefined) updateFields.allow_preorder = payload.allow_preorder
 
     const result = await DatabaseService.products.findOneAndUpdate(
       { _id: new ObjectId(product_id) },

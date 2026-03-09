@@ -3,7 +3,7 @@ export const PRODUCT_MESSAGES = {
   NAME_IS_REQUIRED: 'Product name is required',
   NAME_MUST_BE_A_STRING: 'Product name must be a string',
   NAME_LENGTH_MUST_BE_FROM_1_TO_200: 'Product name length must be from 1 to 200',
-
+  ALLOW_PREORDER_MUST_BE_BOOLEAN: 'Allow preorder must be a boolean',
   // description
   DESCRIPTION_MUST_BE_A_STRING: 'Description must be a string',
 

@@ -10,7 +10,7 @@ import { filterMiddleware } from '~/middlewares/common.middlewares'
 import { requireRole } from '~/middlewares/requireRole.middlewares'
 import { accessTokenValidator, updateMeValidator } from '~/middlewares/users.middlewares'
 import { UpdateMeReqBody } from '~/models/request/user.requests'
-
+import { getDashboardStatsController } from '~/controllers/admin.controllers'
 import { WarpAsync } from '~/utils/handlers'
 
 const adminRouters = express.Router()
@@ -74,5 +74,16 @@ adminRouters.patch(
   filterMiddleware<UpdateMeReqBody>(['name', 'date_of_birth', 'gender', 'address', 'avatar']),
   updateMeValidator,
   WarpAsync(updateMeAdminController)
+)
+//!------------------------------------------------------------------------------------------------------------|
+/**
+ * @description Lấy thống kê tổng quan (Admin/Staff)
+ * @endpoint GET /admins/dashboard/stats
+ */
+adminRouters.get(
+  '/dashboard/stats',
+  accessTokenValidator,
+  // isStaffOrAdminValidator, // Bật lên nếu bạn đã có middleware này
+  WarpAsync(getDashboardStatsController)
 )
 export default adminRouters

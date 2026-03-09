@@ -158,27 +158,7 @@ export const registerValidator = validate(
           }
         }
       },
-      citizen_id: {
-        notEmpty: { errorMessage: USERS_MESSAGES.CITIZEN_ID_IS_REQUIRED },
-        isString: { errorMessage: USERS_MESSAGES.CITIZEN_ID_MUST_BE_A_STRING },
-        trim: true,
-        isLength: {
-          options: {
-            min: 12,
-            max: 12
-          },
-          errorMessage: USERS_MESSAGES.CITIZEN_ID_LENGTH_MUST_HAVE_12_NUMBER
-        },
-        custom: {
-          options: async (value, { req }) => {
-            const isExist = await UserServicess.checkCitizenIDExist(value)
-            if (isExist) {
-              throw new Error('Citizen ID already exists')
-            }
-            return true
-          }
-        }
-      },
+
       // KIỂU ARESS LÀ OBJECT
       'address.street': {
         optional: true,
@@ -215,20 +195,6 @@ export const registerValidator = validate(
             max: 6
           }
         }
-      },
-      'emergency_contact.name': {
-        optional: true,
-        isString: {
-          errorMessage: USERS_MESSAGES.EMERGENCY_CONTACT_NAME_MUST_BE_STRING
-        },
-        trim: true
-      },
-      'emergency_contact.phoneNumber': {
-        optional: true,
-        isString: {
-          errorMessage: USERS_MESSAGES.EMERGENCY_CONTACT_PHONE_MUST_BE_STRING
-        },
-        trim: true
       },
 
       password: passwordSchema,
@@ -524,30 +490,6 @@ export const updateMeValidator = validate(
         notEmpty: { errorMessage: USERS_MESSAGES.GENDER_IS_REQUIRED },
         isString: { errorMessage: USERS_MESSAGES.GENDER_MUST_BE_A_STRING }
       },
-      citizen_id: {
-        optional: true,
-        // isString: { errorMessage: USERS_MESSAGES.CITIZEN_ID_MUST_BE_A_STRING },
-        isNumeric: {
-          errorMessage: USERS_MESSAGES.CITIZEN_ID_MUST_BE_A_NUMBER
-        },
-        trim: true,
-        isLength: {
-          options: {
-            min: 12,
-            max: 12
-          },
-          errorMessage: USERS_MESSAGES.CITIZEN_ID_LENGTH_MUST_HAVE_12_NUMBER
-        },
-        custom: {
-          options: async (value, { req }) => {
-            const isExist = await UserServicess.checkCitizenIDExist(value)
-            if (!isExist) {
-              throw new Error('Citizen ID is not exist')
-            }
-            return true
-          }
-        }
-      },
 
       'address.street': {
         optional: true,
@@ -585,55 +527,11 @@ export const updateMeValidator = validate(
           }
         }
       },
-      'emergency_contact.name': {
-        optional: true,
-        isString: {
-          errorMessage: USERS_MESSAGES.EMERGENCY_CONTACT_NAME_MUST_BE_STRING
-        },
-        trim: true
-      },
-      'emergency_contact.phoneNumber': {
-        optional: true,
-        isString: {
-          errorMessage: USERS_MESSAGES.EMERGENCY_CONTACT_PHONE_MUST_BE_STRING
-        },
-        trim: true
-      },
 
       avatar: imageSchema
     },
     ['body']
   )
 )
-export const getCitizenIDValidator = validate(
-  checkSchema(
-    {
-      citizen_id: {
-        notEmpty: { errorMessage: USERS_MESSAGES.CITIZEN_ID_IS_REQUIRED },
-        // isString: { errorMessage: USERS_MESSAGES.CITIZEN_ID_MUST_BE_A_STRING },
-        isNumeric: {
-          errorMessage: USERS_MESSAGES.CITIZEN_ID_MUST_BE_A_NUMBER
-        },
-        trim: true,
-        isLength: {
-          options: {
-            min: 12,
-            max: 12
-          },
-          errorMessage: USERS_MESSAGES.CITIZEN_ID_LENGTH_MUST_HAVE_12_NUMBER
-        },
-        custom: {
-          options: async (value, { req }) => {
-            const isExist = await UserServicess.checkCitizenIDExist(value)
-            if (!isExist) {
-              throw new Error('Citizen ID is not exist')
-            }
-            return true
-          }
-        }
-      }
-    },
-    ['body']
-  )
-)
+
 //!------------------------------------------------------------------------------------------------|
