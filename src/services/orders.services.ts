@@ -212,6 +212,36 @@ class OrderService {
     const orders = await DatabaseService.orders.find().sort({ created_at: -1 }).toArray()
     return orders
   }
+  //!-------------------------------------------------------------------------------------------------|
+  //TOdo Cancel order: users
+  async cancelOrder(order_id: string, user_id: string) {
+    const order = await DatabaseService.orders.findOne({ _id: new ObjectId(order_id) })
+
+    if (!order) {
+      throw new ErrorWithStatus({ message: ORDER_MESSAGES.ORDER_NOT_FOUND, status: HTTP_STATUS.NOT_FOUND })
+    }
+
+    // 1. Kiểm tra bảo mật: Đơn hàng này có đúng là của user đang request không?
+    if (order.user_id.toString() !== user_id) {
+      throw new ErrorWithStatus({
+        message: 'Bạn không có quyền hủy đơn hàng của người khác',
+        status: HTTP_STATUS.FORBIDDEN
+      })
+    }
+
+    // 2.Chỉ hủy khi đơn hàng đang Pending
+    if (order.status !== OrderStatus.Pending) {
+      throw new ErrorWithStatus({
+        message:
+          'Chỉ có thể tự hủy đơn hàng khi đang ở trạng thái chờ duyệt (Pending). Xin vui lòng liên hệ nhân viên nếu muốn đổi ý.',
+        status: HTTP_STATUS.BAD_REQUEST
+      })
+    }
+
+    // 3. Tái sử dụng  updateOrderStatus để tự động:
+    // Thu hồi điểm, Cộng lại tồn kho, và đổi Status thành Cancelled
+    return await this.updateOrderStatus(order_id, OrderStatus.Cancelled)
+  }
 }
 
 const OrderServices = new OrderService()

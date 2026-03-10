@@ -33,6 +33,18 @@ export const updateOrderStatusController = async (req: Request, res: Response) =
     result
   })
 }
+export const cancelOrderController = async (req: Request, res: Response) => {
+  const { order_id } = req.params
+  const { user_id } = req.decode_authorization as TokenPayload
+
+  const result = await OrderServices.cancelOrder(order_id, user_id)
+
+  return res.json({
+    message: 'Hủy đơn hàng thành công',
+    result
+  })
+}
+
 export const getOrderByIdController = async (req: Request, res: Response) => {
   const { order_id } = req.params
   const { user_id, role } = req.decode_authorization as TokenPayload

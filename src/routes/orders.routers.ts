@@ -4,7 +4,8 @@ import {
   getMyOrdersController,
   updateOrderStatusController,
   getOrderByIdController, // <- Thêm cái này
-  getAllOrdersController // <- Thêm cái này
+  getAllOrdersController, // <- Thêm cái này
+  cancelOrderController
 } from '~/controllers/orders.controllers'
 import { createOrderValidator, isStaffOrAdminValidator } from '~/middlewares/orders.middlewares'
 import { accessTokenValidator, verifyfiedUserValidator } from '~/middlewares/users.middlewares'
@@ -59,3 +60,15 @@ ordersRouters.get(
  */
 ordersRouters.get('/:order_id', accessTokenValidator, verifyfiedUserValidator, WarpAsync(getOrderByIdController))
 export default ordersRouters
+
+/**
+ * @description: Member tự hủy đơn hàng (Chỉ cho phép khi Pending)
+ * @method: PATCH /orders/:order_id/cancel
+ */
+ordersRouters.patch(
+  '/:order_id/cancel',
+  accessTokenValidator,
+  verifyfiedUserValidator,
+  // Không có isStaffOrAdminValidator ở đây để Member có thể gọi
+  WarpAsync(cancelOrderController)
+)
