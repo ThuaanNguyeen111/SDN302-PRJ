@@ -70,7 +70,6 @@ class VoucherService {
     let discount_amount = 0
     if (voucher.discount_type === 'percentage') {
       discount_amount = (total_amount * voucher.discount_value) / 100
-      // Ghi chú: Có thể thêm logic "Giảm tối đa bao nhiêu tiền" (max_discount) nếu cần
     } else {
       discount_amount = voucher.discount_value
     }
