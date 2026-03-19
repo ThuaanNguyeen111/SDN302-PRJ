@@ -126,7 +126,7 @@ class OrderService {
         console.error('Lỗi khi tích điểm:', err)
       })
     }
-
+    await DatabaseService.carts.findOneAndDelete({ user_id: new ObjectId(user_id) })
     return { order_id: result.insertedId, points_earned: earnedPoints, ...newOrder }
   }
 

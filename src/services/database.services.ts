@@ -18,6 +18,7 @@ import Reward from '~/models/schema/reward.schemas'
 import PointHistory from '~/models/schema/pointHistory.schemas'
 import Report from '~/models/schema/report.schemas'
 import Review from '~/models/schema/reviews.schemas'
+import Cart from '~/models/schema/cart.schemas'
 
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@sdn-project.u8hm9wu.mongodb.net/?appName=SDN-project`
@@ -101,6 +102,9 @@ class DatabaseServices {
   }
   get reviews(): Collection<Review> {
     return this.db.collection(process.env.DB_REVIEWS_COLLECTION || 'reviews')
+  }
+  get carts(): Collection<Cart> {
+    return this.db.collection(process.env.DB_CARTS_COLLECTION || 'carts')
   }
 }
 

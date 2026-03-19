@@ -15,6 +15,7 @@ import postRouters from './routes/post.routers'
 import rewardsRouters, { pointHistoryRouter } from './routes/rewards.routers'
 import reportsRouters, { adminReportsRouters } from './routes/reports.routers'
 import reviewsRouters from './routes/reviews.routers'
+import cartsRouters from './routes/cart.routers'
 
 config()
 
@@ -43,7 +44,7 @@ app.use('/api/users', pointHistoryRouter) // route handler lịch sử điểm t
 app.use('/api/reports', reportsRouters) // route handler gửi report (Member)
 app.use('/api/admin', adminReportsRouters) // route handler quản lý report (Staff/Admin)
 app.use('/api/reviews', reviewsRouters)
-
+app.use('/api/carts', cartsRouters)
 console.log('DB_USERS_COLLECTION:', process.env.DB_USERS_COLLECTION)
 app.use(defaultErrorHandler)
 // route handler cho các thành viên chính
