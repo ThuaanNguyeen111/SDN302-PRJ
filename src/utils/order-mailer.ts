@@ -21,7 +21,7 @@ export async function sendOrderConfirmationEmail(toEmail: string, name: string, 
       name,
       buttonText: 'Xem chi tiết đơn hàng',
       message: `Chúc mừng bạn! Đơn hàng #${orderId} với tổng trị giá ${formattedAmount} đã được đặt thành công. Chúng tôi sẽ nhanh chóng kiểm tra và giao hàng đến cho mẹ và bé trong thời gian sớm nhất.`,
-      link: `http://localhost:3000/account/orders/${orderId}`
+      link: `http://localhost:5173/account/orders/${orderId}`
     })
   })
 }

@@ -10,7 +10,7 @@ export async function sendVerificationEmail(toEmail: string, name: string, token
     }
   })
 
-  const verificationLink = `http://localhost:3000/members/verify-email?email_verify_token=${token}`
+  const verificationLink = `http://localhost:5173/members/verify-email?email_verify_token=${token}`
 
   await transporter.sendMail({
     from: `"Baby Product Support" <${process.env.SMTP_USER}>`,

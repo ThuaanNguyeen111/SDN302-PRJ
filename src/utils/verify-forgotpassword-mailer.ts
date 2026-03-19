@@ -10,7 +10,7 @@ export async function sendForgotPasswordEmail(toEmail: string, name: string, tok
     }
   })
 
-  const resetLink = `http://localhost:3000/members/reset-password?forgot_password_token=${token}`
+  const resetLink = `http://localhost:5173/members/reset-password?forgot_password_token=${token}`
 
   await transporter.sendMail({
     from: `"Baby Product Security" <${process.env.SMTP_USER}>`,
